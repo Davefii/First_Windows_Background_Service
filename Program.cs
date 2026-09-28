@@ -12,7 +12,7 @@ namespace WindowsServiceFullServiceTesting
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        /*static void Main()
         {
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
@@ -20,6 +20,25 @@ namespace WindowsServiceFullServiceTesting
                 new MyFullServiceStateImplementation()
             };
             ServiceBase.Run(ServicesToRun);
+        }*/
+
+        static void Main()
+        {
+            if (Environment.UserInteractive)
+            {
+                Console.WriteLine("Running in Console Mode...");
+                MyFullServiceStateImplementation myFullServiceStateImplementation = new MyFullServiceStateImplementation();
+                myFullServiceStateImplementation.StartInConsole();
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
+                new MyFullServiceStateImplementation()
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
         }
     }
 }

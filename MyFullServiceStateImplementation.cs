@@ -41,6 +41,10 @@ namespace WindowsServiceFullServiceTesting
         {
             string logMessege = $"[{DateTime.Now:f}] {Messege}\n";
             File.AppendAllText(logfilePath, logMessege);
+            if (Environment.UserInteractive)
+            {
+                Console.WriteLine(logMessege);
+            }
         }
         protected override void OnStart(string[] args)
         {
@@ -64,7 +68,16 @@ namespace WindowsServiceFullServiceTesting
 
         protected override void OnStop()
         {
-            LogServiceEvent("Service Stopped");
+            LogServiceEvent("Service Stopped right Now");
+        }
+
+        public void StartInConsole()
+        {
+            OnStart(null);
+            Console.WriteLine("Press Enter to Stop the Service...");
+            Console.ReadLine();
+            OnStop();
+            Console.ReadKey();
         }
     }
 }
